@@ -8,11 +8,22 @@
     };
     export const createTask = (title) => {
         const newTask = {
-            id: tasks.length + 1,
+            id: Date.now(),
             title,
             status:"todo",
         };
 
         tasks.push(newTask)
         return newTask
+    };
+    export const toggleTaskStatus = (id) => {
+        const task = tasks.find ((t) => t.id == id );
+        if (!task) throw new Error ("Task not found");
+
+        task.status = task.status == "done" ? "todo" : "done" ;
+        return task;
+    }
+
+    export const removeTask = (id) => {
+        tasks = tasks.filter((t) => t.id != id);
     };

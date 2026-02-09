@@ -1,15 +1,18 @@
 import express from "express";
 import taskRoutes from "./routes/task.routes.js";
+import cors from "cors";
+
 
 const app = express();
 
-// 1️⃣ JSON body middleware — აუცილებელია POST-ისთვის
+app.use(cors());
+// JSON body middleware 
 app.use(express.json());
 
-// 2️⃣ routes-ის მიბმა
+// routes
 app.use("/api/tasks", taskRoutes);
 
-// 3️⃣ (სურვილისამებრ) error handler — ბოლოში
+// error handler 
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ message: "Internal Server Error" });
