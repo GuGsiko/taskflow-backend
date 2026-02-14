@@ -1,29 +1,22 @@
-    let tasks = [
-        { id : 1, title:"Learn Node.js", status: "in_progress"},
-        {id : 3, title : "Connect Frontend", status : "todo"},
-    ];
+import Task from "../models/Task.js";
 
-    export const fetchTasks = () => {
-        return tasks;
-    };
-    export const createTask = (title) => {
-        const newTask = {
-            id: Date.now(),
-            title,
-            status:"todo",
-        };
+export const fetchTasks = async () => {
+  return await Task.find().sort({ createdAt: -1 });
+};
 
-        tasks.push(newTask)
-        return newTask
-    };
-    export const toggleTaskStatus = (id) => {
-        const task = tasks.find ((t) => t.id == id );
-        if (!task) throw new Error ("Task not found");
+export const createTask = async (title) => {
+  const task = new Task({ title });
+  return await task.save();
+};
 
-        task.status = task.status == "done" ? "todo" : "done" ;
-        return task;
-    }
+export const toggleTaskStatus = async (id) => {
+  const task = await Task.findById(id);
+  if (!task) throw new Error("Task not found");
 
-    export const removeTask = (id) => {
-        tasks = tasks.filter((t) => t.id != id);
-    };
+  task.status = task.status === "done" ? "todo" : "done";
+  return await task.save();
+};
+
+export const removeTask = async (id) => {
+  await Task.findByIdAndDelete(id);
+};
