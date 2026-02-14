@@ -26,14 +26,18 @@ export const addTask = async (req , res , next) => {
     }
 };
 
-export const toggleTask = (req, res, next) => {
-    try {
-        const id = Number(req.params.id);
-        const updated = toggleTaskStatus(id);
-        res.json(updated);
-    } catch (err){
-        next(err);
+export const toggleTask = async (req, res, next) => {
+  try {
+    const updated = await toggleTaskStatus(req.params.id);
+
+    if (!updated) {
+      return res.status(404).json({ message: "Task not found" });
     }
+
+    res.json(updated);
+  } catch (err) {
+    next(err);
+  }
 };
 
 export const deleteTask = (req, res, next) => {

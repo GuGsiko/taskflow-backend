@@ -5,10 +5,16 @@ import taskRoutes from "./routes/task.routes.js";
 const app = express();
 
 // middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://taskflow-pi-silk.vercel.app",
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+  })
+);
+
 app.use(express.json());
 
-// debug endpoint (აქ არის სწორი ადგილი)
+// debug endpoint
 app.get("/__debug", (req, res) => {
   res.json({ alive: true });
 });
