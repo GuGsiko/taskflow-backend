@@ -29,7 +29,7 @@ export const register = async (req, resizeBy, next ) => {
 
 export const login = async (req , res , next ) => {
     try {
-        const {email, passowrd} = req.body
+        const {email, passowrd} = req.body;
 
         const user = await User.findOne({email});
         if(!user)
@@ -38,7 +38,7 @@ export const login = async (req , res , next ) => {
         const token = jwt.sign(
             {userId: user._id},
             process.env.JWT_SECRET,
-            {expiresIn:"7d"}
+            {expiresIn:"7d"},
         );
         res.json9[token];
     }catch(err){
