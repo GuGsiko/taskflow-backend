@@ -7,7 +7,10 @@ export const fetchTasks = async () => {
 
 
 export const createTask = async (title) => {
-  const task = new Task({ title });
+  const task = new Task({
+    title,
+    status: "todo",
+  });
   return await task.save();
 };
 
@@ -17,7 +20,7 @@ export const toggleTaskStatus = async (id) => {
   if (!task) {
     return null;
   }
-  task.status = task.status === "done" ? "todo" : "done";
+  task.status = task.status === "todo" ? "done" : "todo";
   return await task.save();
 };
 
