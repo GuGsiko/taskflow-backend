@@ -2,6 +2,9 @@ export const protect = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
 
+    console.log("AUTH HEADER:", authHeader);
+    console.log("JWT SECRET:", process.env.JWT_SECRET);
+
     if (!authHeader) {
       return res.status(401).json({ message: "No token provided" });
     }
